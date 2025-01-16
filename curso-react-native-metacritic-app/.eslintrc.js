@@ -22,6 +22,7 @@ module.exports = {
     'react-native/no-unused-styles': 'warn', // Advertencia para estilos no usados
     'react-native/split-platform-components': 'warn', // Separar componentes de plataforma
     // Reglas recomendadas de ESLint, TypeScript y React
+    'react-native/no-inline-styles': 'off',
     'react-native/no-color-literals': 'off',
     'semi': ['error', 'never'],
     'quotes': ['error', 'single'],

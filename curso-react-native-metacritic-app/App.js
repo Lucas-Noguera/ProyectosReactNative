@@ -1,19 +1,34 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Button, Image, TouchableHighlight } from 'react-native'
+import { useEffect, useState } from 'react'
+import { StyleSheet, View, Text, Image } from 'react-native'
+import { getLatestGames } from './lib/metacritic'
 
 export default function App() {
+  const [games, setGames] = useState([])
+
+  useEffect(() => {
+    getLatestGames().then((games) => setGames(games))
+  }, [])
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      <Image source={{uri: 'https://i.pinimg.com/originals/b5/e9/2a/b5e92a9f9f2e9634b2e816b9594d42f5.jpg'}}
-        style={{width: 215, height: 294}}
-      />
-      <Text style={{fontSize: 20, color: 'white'}}>Metacritic</Text>
-      <Button 
-        title='Pulsa aqui'
-        onPress={() => alert('Hola')}
-      />
-      <TouchableHighlight />
+      {games.map(game => (
+        <View key={game.slug} style={styles.card}>
+          <Image 
+            source={{ uri: game.image }} 
+            style={{ 
+              width: 107,
+              height: 147,
+              borderRadius: 10
+            }}
+          />
+          <Text style={styles.gameTitle}>{game.title}</Text>
+          <Text style={styles.gameDescription}>{game.description}</Text>
+          
+        </View>
+      ))}
+    
     </View>
   )
 }
