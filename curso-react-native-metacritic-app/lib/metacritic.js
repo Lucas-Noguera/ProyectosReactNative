@@ -1,4 +1,4 @@
-const API_KEY = '128ec69e718149348fbc7518eaeeb227' // Sustituye esto con tu clave de API de RAWG
+import { API_KEY } from '../config'
 
 export async function getLatestGames() {
   const LATEST_GAMES = `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-metacritic&page_size=24`
