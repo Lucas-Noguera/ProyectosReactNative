@@ -14,18 +14,14 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="light" />
       {games.map(game => (
-        <View key={game.slug} style={styles.card}>
+        <View key={game.id} style={styles.card}>
           <Image 
             source={{ uri: game.image }} 
-            style={{ 
-              width: 107,
-              height: 147,
-              borderRadius: 10
-            }}
+            style={styles.image}
           />
           <Text style={styles.gameTitle}>{game.title}</Text>
-          <Text style={styles.gameDescription}>{game.description}</Text>
-          
+          <Text style={styles.description}>{game.description}</Text>
+          <Text style={styles.score}>Metacritic: {game.score}</Text>
         </View>
       ))}
     
@@ -34,10 +30,43 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  card: {
+    alignSelf: 'center',
+    backgroundColor: '#1c1c1e', 
+    borderRadius: 10,
+    marginBottom: 20,          
+    padding: 15,
+    width: '90%',
+  },
   container: {
-    alignItems: 'center',
     backgroundColor: '#000',
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 20,
+  },
+  description: {
+    color: '#fff',
+    fontSize: 14,
+    lineHeight: 20,
+    marginTop: 10,
+    textAlign: 'justify',
+  },
+  gameTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  image: {
+    borderRadius: 10,
+    height: 150,
+    marginBottom: 10,
+    width: '100%',
+  },
+  score: {
+    color: 'green',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
 })

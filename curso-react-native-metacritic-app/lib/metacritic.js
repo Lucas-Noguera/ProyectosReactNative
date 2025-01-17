@@ -1,47 +1,55 @@
 import { API_KEY } from '../config'
 
+function cleanHTML(html) {
+  const cleanText = html.replace(/<\/?[^>]+(>|$)/g, '')
+  return cleanText
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, '\'')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+}
+
 export async function getLatestGames() {
   const LATEST_GAMES = `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-metacritic&page_size=24`
 
-  const rawData = await fetch(LATEST_GAMES)
-  const json = await rawData.json()
+  try {
+    const response = await fetch(LATEST_GAMES)
+    const json = await response.json()
 
-  return json.results.map((item) => {
-    const { name, slug, released, background_image, metacritic, description_raw } = item
+    const games = await Promise.all(
+      json.results.map(async (game) => {
+        const gameDetails = await getGameDetails(game.id) 
+        return {
+          id: game.id,
+          title: game.name,
+          releaseDate: game.released,
+          score: game.metacritic,
+          image: game.background_image,
+          description: cleanHTML(gameDetails.description), 
+        }
+      })
+    )
 
-    return {
-      title: name,
-      slug,
-      releaseDate: released,
-      image: background_image,
-      score: metacritic,
-      description: description_raw || 'No description available.',
-    }
-  })
+    return games
+  } catch (error) {
+    console.error('Error al obtener la lista de juegos:', error)
+    return []
+  }
 }
 
-export async function getGameDetails(slug) {
-  const GAME_DETAILS = `https://api.rawg.io/api/games/${slug}?key=${API_KEY}`
+export async function getGameDetails(gameId) {
+  const GAME_DETAILS = `https://api.rawg.io/api/games/${gameId}?key=${API_KEY}`
 
-  const rawData = await fetch(GAME_DETAILS)
-  const json = await rawData.json()
+  try {
+    const response = await fetch(GAME_DETAILS)
+    const json = await response.json()
 
-  const { name, description_raw, metacritic, background_image, released, ratings, developers } = json
-
-  // Obtén las reseñas (RAWG no tiene reseñas detalladas, pero puedes usar ratings)
-  const reviews = ratings.map((rating) => ({
-    title: rating.title,
-    count: rating.count,
-    percent: rating.percent,
-  }))
-
-  return {
-    title: name,
-    description: description_raw || 'No description available.',
-    score: metacritic,
-    releaseDate: released,
-    image: background_image,
-    developers: developers.map((dev) => dev.name).join(', '),
-    reviews,
+    return {
+      description: json.description,
+    }
+  } catch (error) {
+    console.error(`Error al obtener los detalles del juego ${gameId}:`, error)
+    return { description: 'Descripción no disponible' }
   }
 }
