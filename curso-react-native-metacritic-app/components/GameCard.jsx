@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,          
     padding: 15,
-    width: '90%',
+    width: '100%',
   },
   description: {
     color: '#fff',
