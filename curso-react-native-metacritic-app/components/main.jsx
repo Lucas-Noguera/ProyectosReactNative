@@ -1,66 +1,32 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native'
+import { View, ActivityIndicator, FlatList } from 'react-native'
 import { getLatestGames } from '../lib/metacritic'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
+import { GameCard } from './GameCard'
+import { Logo } from './Logo'
 
 export function Main() {
   const [games, setGames] = useState([])
+  const insets = useSafeAreaInsets()
 
   useEffect(() => {
     getLatestGames().then((games) => setGames(games))
   }, [])
 
   return (
-    <>
-      <ScrollView>
-        {games.map(game => (
-          <View key={game.id} style={styles.card}>
-            <Image 
-              source={{ uri: game.image }} 
-              style={styles.image}
-            />
-            <Text style={styles.gameTitle}>{game.title}</Text>
-            <Text style={styles.description}>{game.description}</Text>
-            <Text style={styles.score}>Metacritic: {game.score}</Text>
-          </View>
-        ))}
-      </ScrollView>
-    </>
+    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
+      <View style={{marginTop: 20}}>
+        <Logo />
+      </View>
+      {games.length === 0 ? (
+        <ActivityIndicator size={'large'} />
+      ): (
+        <FlatList
+          data={games}
+          keyExtractor={game => game.id}
+          renderItem={({ item }) => <GameCard game={item} />}
+        />
+      )}
+    </View>
   )
 }
-
-const styles = StyleSheet.create({
-  card: {
-    alignSelf: 'center',
-    backgroundColor: '#1c1c1e', 
-    borderRadius: 10,
-    marginBottom: 20,          
-    padding: 15,
-    width: '90%',
-  },
-  description: {
-    color: '#fff',
-    fontSize: 14,
-    lineHeight: 20,
-    marginTop: 10,
-    textAlign: 'justify',
-  },
-  gameTitle: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  image: {
-    borderRadius: 10,
-    height: 150,
-    marginBottom: 10,
-    width: '100%',
-  },
-  score: {
-    color: 'green',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 10,
-  },
-})
