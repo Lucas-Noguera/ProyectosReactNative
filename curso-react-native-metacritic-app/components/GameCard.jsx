@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, Animated } from 'react-native'
 
 export function GameCard({ game }) {
   return (
-    <View key={game.id} style={styles.card}>
+    <View className="bg-white rounded-lg shadow-md" key={game.id}>
       <Image 
         source={{ uri: game.image }} 
         style={styles.image}
