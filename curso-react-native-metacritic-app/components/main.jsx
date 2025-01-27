@@ -13,20 +13,24 @@ export function Main() {
     getLatestGames().then((games) => setGames(games))
   }, [])
 
-  return (
-    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
-      <View style={{marginTop: 20}}>
+  return  (
+    <View style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}>
+      <View style={{ marginTop: 20 }}>
         <Logo />
       </View>
       {games.length === 0 ? (
         <ActivityIndicator size={'large'} />
-      ): (
+      ) : (
         <FlatList
           data={games}
-          keyExtractor={game => game.id}
-          renderItem={({ item, index }) => <AnimatedGameCard game={item} index={index} />}
+          keyExtractor={(game) => game.id}
+          renderItem={({ item, index }) => (
+            <AnimatedGameCard game={item} index={index} />
+          )}
+          contentContainerStyle={{ paddingBottom: 20 }} 
         />
       )}
     </View>
   )
+  
 }

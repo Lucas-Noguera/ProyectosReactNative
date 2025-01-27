@@ -1,41 +1,66 @@
 import { useEffect, useRef } from 'react'
-import { View, Text, Image, Animated } from 'react-native'
+import { StyleSheet, View, Text, Image, Animated } from 'react-native'
 
 export function GameCard({ game }) {
   return (
-    <View className="bg-white rounded-lg shadow-md p-4 mb-4">
+    <View className="flex-row bg-slate-500 p-2 rounded-xl gap-4 mb-5">
       <Image 
         source={{ uri: game.image }} 
-        className="w-full h-36 rounded-lg mb-4"
+        style={styles.image}
       />
-      <Text className="text-lg font-bold text-black text-center">
-        {game.title}
-      </Text>
-      <Text className="text-sm text-gray-700 text-justify mt-2">
-        {game.description}
-      </Text>
-      <Text className="text-green-600 font-bold text-center mt-2">
-        Metacritic: {game.score}
-      </Text>
+      <View className="w-60">
+        <Text className="mb-1" style={styles.title}>{game.title}</Text>
+        <Text className="mt-2 flex-shrink" style={styles.description}>{game.description.slice(0, 100)}...</Text>
+        <Text style={styles.score}>Metacritic: {game.score}</Text>
+      </View>
     </View>
   )
 }
 
-export function AnimatedGameCard({ game, index }) {
+export function AnimatedGameCard({game, index}) {
   const opacity = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 500,
+      duration: 100,
       delay: index * 250,
-      useNativeDriver: false,
+      useNativeDriver: true, 
     }).start()
   }, [opacity, index])
 
   return (
-    <Animated.View style={{ opacity }}>
+    <Animated.View style={[styles.card, {opacity}]}>
       <GameCard game={game} />
     </Animated.View>
   )
 }
+
+const styles = StyleSheet.create({
+  card: {
+    marginBottom: 16,
+  },
+  description: {
+    color: '#eee',
+    flexWrap: 'wrap',
+    fontSize: 16,
+  },
+  image: {
+    borderRadius: 30,
+    height: 200,
+    resizeMode: 'cover',
+    width: 150,
+  },
+  score: {
+    color: 'green',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+})
