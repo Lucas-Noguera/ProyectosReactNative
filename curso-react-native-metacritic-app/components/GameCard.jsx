@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { StyleSheet, View, Text, Image, Animated } from 'react-native'
+import { Score } from './Score'
 
 export function GameCard({ game }) {
   return (
@@ -8,10 +9,10 @@ export function GameCard({ game }) {
         source={{ uri: game.image }} 
         style={styles.image}
       />
-      <View className="w-60">
+      <View className="justify-center items-left">
         <Text className="mb-1" style={styles.title}>{game.title}</Text>
-        <Text className="mt-2 flex-shrink" style={styles.description}>{game.description.slice(0, 100)}...</Text>
-        <Text style={styles.score}>Metacritic: {game.score}</Text>
+        <Score score={game.score} maxScore={100} />
+        <Text className="mt-2 flex-shrink" style={styles.description}>{game.description.slice(0, 50)}...</Text>
       </View>
     </View>
   )
@@ -44,23 +45,22 @@ const styles = StyleSheet.create({
     color: '#eee',
     flexWrap: 'wrap',
     fontSize: 16,
+    width: 200
   },
   image: {
     borderRadius: 30,
-    height: 200,
-    resizeMode: 'cover',
-    width: 150,
-  },
-  score: {
-    color: 'green',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    height: 180,
+    margin: 0,
+    padding: 0,
+    resizeMode: 'stretch',
+    width: 165,
   },
   title: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
+    width: 200
+
   },
 })
