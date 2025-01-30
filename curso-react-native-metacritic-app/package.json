@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.1",
+    "@expo/vector-icons": "^14.0.4",
     "babel-preset-expo": "^12.0.6",
     "expo": "^52.0.28",
     "expo-constants": "~17.0.5",
