@@ -15,11 +15,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
+  container: {
     alignItems: 'center',
     backgroundColor: '#000',
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 5,
+    paddingHorizontal: 12,
+    resizeMode: 'contain',
   },
 })
