@@ -4,7 +4,7 @@ import { Score } from './Score'
 
 export function GameCard({ game }) {
   return (
-    <View className="flex-row bg-slate-500 p-2 rounded-xl gap-4 mb-5">
+    <View className="flex-row bg-slate-500 p-2 rounded-xl gap-1 mb-4">
       <Image 
         source={{ uri: game.image }} 
         style={styles.image}
@@ -15,6 +15,7 @@ export function GameCard({ game }) {
         <Text className="mt-2 flex-shrink" style={styles.description}>{game.description.slice(0, 50)}...</Text>
       </View>
     </View>
+
   )
 }
 
