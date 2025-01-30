@@ -16,6 +16,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'react-native/no-raw-text:': 'off',
     // Agrega reglas personalizadas si lo deseas
     'react/react-in-jsx-scope': 'off', // No es necesario importar React en proyectos con React 17+
     'react/prop-types': 'off', // Si no usas prop-types
