@@ -8,7 +8,7 @@ const StyledPressable = styled(Pressable)
 
 export function GameCard({ game }) {
   return (
-    <Link href={`/${game.id}`} asChild>
+    <Link href={`./${game.id}`} asChild replace>
       <StyledPressable className='active:opacity-70 border border-black active:border-white/50 mb-2 bg-slate-500 p-2 rounded-xl'>
         <View className="flex-row gap-4 mb-1" key={game.id}>
           <Image 
@@ -18,7 +18,7 @@ export function GameCard({ game }) {
           <View className="flez-shrink">
             <Text className="mb-1" style={styles.title}>{game.title}</Text>
             <Score score={game.score} maxScore={100} />
-            <Text className="mt-2 flex-shrink" style={styles.description}>{game.description.slice(0, 100)}...</Text>
+            <Text className="mt-2 flex-shrink" style={styles.description}>{game.description.slice(0, 80)}...</Text>
           </View>
         </View>
       </StyledPressable>
@@ -39,7 +39,7 @@ export function AnimatedGameCard({game, index}) {
   }, [opacity, index])
 
   return (
-    <Animated.View style={[styles.card, {opacity}]}>
+    <Animated.View key={game.id} style={[styles.card, {opacity}]}>
       <GameCard game={game} />
     </Animated.View>
   )
