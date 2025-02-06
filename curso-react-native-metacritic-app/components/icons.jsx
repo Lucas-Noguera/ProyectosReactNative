@@ -6,5 +6,9 @@ export const CircleInfoIcon = (props) => (
 )
 
 export const HomeIcon = (props) => (
-  <FontAwesome name="home" size={50} color="white" {...props} />
+  <FontAwesome name="home" size={32} color="white" {...props} />
+)
+
+export const InfoIcon = (props) => (
+  <Entypo name="info" size={25} color="white" {...props} />
 )

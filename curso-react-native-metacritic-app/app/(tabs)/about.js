@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-raw-text */
 import { Link } from 'expo-router'
 import { Text, ScrollView, Pressable } from 'react-native'
-import { HomeIcon } from '../components/icons'
+import { HomeIcon } from '../../components/icons.jsx'
 import { styled } from 'nativewind'
-import { Screen } from '../components/Screen.jsx'
+import { Screen } from '../../components/Screen.jsx'
 
 const StylePressable = styled(Pressable)
 
