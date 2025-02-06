@@ -39,17 +39,38 @@ export async function getLatestGames() {
 }
 
 export async function getGameDetails(gameId) {
-  const GAME_DETAILS = `https://api.rawg.io/api/games/${gameId}?key=${API_KEY}`
-
+  const BASE_URL = `https://api.rawg.io/api/games/${gameId}`
+  const PARAMS = `?key=${API_KEY}`
+  
   try {
-    const response = await fetch(GAME_DETAILS)
-    const json = await response.json()
+    const [detailsResponse, reviewsResponse] = await Promise.all([
+      fetch(`${BASE_URL}${PARAMS}`),  // Detalles del juego
+      fetch(`${BASE_URL}/reviews${PARAMS}`) // Reseñas del juego
+    ])
+
+    const detailsJson = await detailsResponse.json()
+    const reviewsJson = await reviewsResponse.json()
+    console.log(reviewsJson)
 
     return {
-      description: json.description,
+      id: detailsJson.id,
+      title: detailsJson.name,
+      releaseDate: detailsJson.released,
+      score: detailsJson.metacritic,
+      image: detailsJson.background_image,
+      description: cleanHTML(detailsJson.description),
+      reviews: reviewsJson.results.slice(0, 3).map(review => ({
+        id: review.id,
+        username: review.user.username,
+        text: review.text || 'Sin comentario',
+        rating: review.rating
+      }))
     }
   } catch (error) {
     console.error(`Error al obtener los detalles del juego ${gameId}:`, error)
-    return { description: 'Descripción no disponible' }
+    return {
+      description: 'Descripción no disponible',
+      reviews: []
+    }
   }
 }
