@@ -1,11 +1,10 @@
-/* eslint-disable react-native/no-raw-text */
-
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
-import {  Stack } from 'expo-router'
+import { ActivityIndicator, ScrollView, Text, View, Image } from 'react-native'
+import { Stack } from 'expo-router'
 import { useLocalSearchParams } from 'expo-router'
 import { Screen } from '../components/Screen.jsx'
 import { useEffect, useState } from 'react'
 import { getGameDetails } from '../lib/metacritic.js'
+import { Score } from '../components/Score.jsx'
 
 export default function Detail({ params }) {
 
@@ -28,16 +27,30 @@ export default function Detail({ params }) {
           headerLeft: () => {},
           headerRight: () => {},
         }}
-
       />
       <View>
         {gameInfo === null ? (
           <ActivityIndicator color={'#fff'} size={'large'} />
         ) : (
           <ScrollView>
-            <Text className='text-white font-bold mb-8 text-2x1'>
-              Detalles del juego {id}
-            </Text>
+            <View className='justify-center items-center text-center'>
+              <Image
+                className='mb-4 rounded'
+                source={{ uri: gameInfo.image }}
+                style={{
+                  width: 214, 
+                  height: 294, 
+                }}
+                resizeMode='stretch'
+              />
+              <Score score={gameInfo.score} maxScore={100} />
+              <Text className='text-white font-bold  text-2x1 text-xl text-center'>
+                {gameInfo.title}
+              </Text>
+              <Text className='text-white/70 mt-4 text-left mb-8 text-base'>
+                {gameInfo.description}
+              </Text>
+            </View>
           </ScrollView>
         )}
       </View>

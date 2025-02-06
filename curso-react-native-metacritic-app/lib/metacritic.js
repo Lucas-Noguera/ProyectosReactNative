@@ -44,12 +44,13 @@ export async function getGameDetails(gameId) {
   
   try {
     const [detailsResponse, reviewsResponse] = await Promise.all([
-      fetch(`${BASE_URL}${PARAMS}`),  // Detalles del juego
-      fetch(`${BASE_URL}/reviews${PARAMS}`) // Reseñas del juego
+      fetch(`${BASE_URL}${PARAMS}`),
+      fetch(`${BASE_URL}/reviews${PARAMS}`)
     ])
 
     const detailsJson = await detailsResponse.json()
     const reviewsJson = await reviewsResponse.json()
+    console.log(detailsJson)
     console.log(reviewsJson)
 
     return {
@@ -61,7 +62,7 @@ export async function getGameDetails(gameId) {
       description: cleanHTML(detailsJson.description),
       reviews: reviewsJson.results.slice(0, 3).map(review => ({
         id: review.id,
-        username: review.user.username,
+        username: review.user.username || 'Anonimo',
         text: review.text || 'Sin comentario',
         rating: review.rating
       }))
