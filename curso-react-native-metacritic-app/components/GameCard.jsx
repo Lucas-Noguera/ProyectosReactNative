@@ -9,13 +9,13 @@ const StyledPressable = styled(Pressable)
 export function GameCard({ game }) {
   return (
     <Link href={`/${game.id}`} asChild >
-      <StyledPressable className='active:opacity-70 border border-black active:border-white/50 mb-2 bg-slate-500 p-2 rounded-xl'>
-        <View className="flex-row gap-4 mb-1" key={game.id}>
+      <StyledPressable className='active:opacity-70 border border-black active:border-white/50 mb-7 bg-slate-500 p-2 rounded-xl'>
+        <View className="flex-row gap-3" key={game.id}>
           <Image 
             source={{ uri: game.image }} 
             style={styles.image}
           />
-          <View className="flez-shrink">
+          <View className="flex-shrink">
             <Text className="mb-1" style={styles.title}>{game.title}</Text>
             <Score score={game.score} maxScore={100} />
             <Text className="mt-2 flex-shrink" style={styles.description}>{game.description.slice(0, 80)}...</Text>
@@ -47,13 +47,18 @@ export function AnimatedGameCard({game, index}) {
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 16,
+    height: 'auto',
+    maxWidth: '100%',
+    width: '100%',
+    
   },
   description: {
     color: '#eee',
     flexWrap: 'wrap',
     fontSize: 16,
-    width: 200
+    maxWidth: '100%',
+    width: 150,
+
   },
   image: {
     borderRadius: 30,
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
-    width: 200
+    width: '100%',
 
   },
 })

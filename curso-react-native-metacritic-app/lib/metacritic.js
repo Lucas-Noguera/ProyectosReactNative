@@ -50,8 +50,6 @@ export async function getGameDetails(gameId) {
 
     const detailsJson = await detailsResponse.json()
     const reviewsJson = await reviewsResponse.json()
-    console.log(detailsJson)
-    console.log(reviewsJson)
 
     return {
       id: detailsJson.id,
